@@ -20,3 +20,6 @@ l=[1,2,3,4]
 print map(lambda x:x**2,l)
 print filter(lambda x:x**2<6,l)
 
+#def(x)=x**2
+g=lambda x:x**2
+print g(2)
