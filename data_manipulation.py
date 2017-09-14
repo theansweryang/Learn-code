@@ -17,8 +17,8 @@ mm1=m4.applymap(lambda x:sum(x))
 mm1=m4.applymap(lambda x:x**2)
 
 l=[1,2,3,4]
-print map(lambda x:x**2,l)
-print filter(lambda x:x**2<6,l)
+print map(lambda x:x**2,l) # map syntax: r = map(func, seq)
+print filter(lambda x:x**2<6,l) 
 
 #def(x)=x**2
 g=lambda x:x**2
