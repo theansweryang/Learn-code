@@ -29,29 +29,26 @@ editcursor.insertRow([ab,'heating'])
 del editcursor#del很重要，del之后data才不会lock
 
 
-##search cursor to extract field values
-#sometimes data layers goes bad, you need to export to another name and delete previous one.
-srchcur= arcpy.SearchCursor('Roads') #a searchcursor class, 这里没有用da.,用的原来的老function
-for row in srchcur:
-    print(row.getValue('SHAPE_Length'))#makesure the name is full name not alias name of the field 
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
+##only use da. class to search and update.. 
+#a_code_to_read_attribute_table
+fields=[ i.name for i in arcpy.ListFields('lc2011_LC')]#get all the fields,记住要加上name
+srCursor= arcpy.da.SearchCursor('lc2011_LC',fields)#建立一个SEARCH cursor
+for row in srCursor:
+    print (row) #each row is a tuple
+del srchcur 
 
-del srchcur  
+#a_code_to_update_attribute_table
+updateCursor= arcpy.da.UpdateCursor('lc2011_LC',fields)#建立一个SEARCH cursor
+for row in updateCursor:
+    print (row)#each row is a list
+del updateCursor 
 
-## Caculate the field using python
-codeblock="""def gettype(ROUTE_TYPE,ROUTE_NUMBER):
-    if int(ROUTE_NUMBER)>300 and ROUTE_TYPE=='Light_duty':
-        return 3333""" #code block is the py function 
-    
-expression='gettype(!ROUTE_TYPE!,!ROUTE_NUMBER!)' #use !! sign to get field values
-arcpy.CalculateField_management('Roads','DISTANCE',expression,"PYTHON_9.3",codeblock)
-
-##update cursor to delete certain features
-cursor=arcpy.UpdateCursor('Invasive_plants') #a searchcursor class, 这里没有用da.,用的原来的老function
-for row in cursor:
-    if (row.getValue('MAP_ID'))<5:
-        cursor.deleteRow(row)
-del cursor
-
-
-
+updateCursor= arcpy.da.UpdateCursor('lc2011_LC',fields)#建立一个SEARCH cursor
+for row in updateCursor:
+    row[-1]=row[0] #here you can make changes
+    updateCursor.updateRow(row)#don't forget to updateRow
+del updateCursor 
 
