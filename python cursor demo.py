@@ -21,7 +21,7 @@ arcpy.CreateFeatureclass_management(workspace,'ptslist2',geometry_type="POINT",s
 ##add fields to the table
 arcpy.AddField_management('ptslist2','name','text')
 
-##create cursor object and add value to a table
+##create cursor object and add value to a table, 记住用da.
 editcursor=arcpy.da.InsertCursor("ptslist2",['SHAPE@XY','name']) 
 ab=[107.8173305, -37.4966125]
 #row=(ab,'yang')#注意必须是这种tuple嵌套的形式
@@ -31,7 +31,7 @@ del editcursor#del很重要，del之后data才不会lock
 
 ##search cursor to extract field values
 #sometimes data layers goes bad, you need to export to another name and delete previous one.
-srchcur= arcpy.SearchCursor('Roads') #a searchcursor class, 
+srchcur= arcpy.SearchCursor('Roads') #a searchcursor class, 这里没有用da.,用的原来的老function
 for row in srchcur:
     print(row.getValue('SHAPE_Length'))#makesure the name is full name not alias name of the field 
 
@@ -46,7 +46,7 @@ expression='gettype(!ROUTE_TYPE!,!ROUTE_NUMBER!)' #use !! sign to get field valu
 arcpy.CalculateField_management('Roads','DISTANCE',expression,"PYTHON_9.3",codeblock)
 
 ##update cursor to delete certain features
-cursor=arcpy.UpdateCursor('Invasive_plants')
+cursor=arcpy.UpdateCursor('Invasive_plants') #a searchcursor class, 这里没有用da.,用的原来的老function
 for row in cursor:
     if (row.getValue('MAP_ID'))<5:
         cursor.deleteRow(row)
