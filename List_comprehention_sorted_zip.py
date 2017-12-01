@@ -22,7 +22,7 @@ list_of_medals = [('Italy', 5), ('Russia', 10), ('Germany', 16),('Ireland', 10),
 
 sorted(list_of_medals, key=lambda tup: (-tup[1], tup[0]))#先按照数字倒排序，数字一样再按照阿拉伯正排序
 
-##zip for list adding
+##zip for list adding, zip helps to get multiple values in order for multiple lists
 x=[1,2,3]
 y=[4,5,6]
 z=[7,8,9]
