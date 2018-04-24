@@ -28,3 +28,4 @@ ab=[107.8173305, -37.4966125]
 editcursor.insertRow([ab,'heating'])
 del editcursor#del很重要，del之后data才不会lock
 
+
