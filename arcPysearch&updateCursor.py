@@ -17,3 +17,4 @@ for row in updateCursor:
     row[-1]=row[0] #here you can make changes
     updateCursor.updateRow(row)#don't forget to updateRow
 del updateCursor 
+ 
